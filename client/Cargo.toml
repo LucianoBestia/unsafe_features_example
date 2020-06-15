@@ -1,0 +1,17 @@
+[package]
+name = "client"
+version = "0.0.1"
+description = "client for unsafe_features_example"
+authors = ["Luciano Bestia"]
+edition = "2018"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/lucianobestia/unsafe_features_example"
+categories = []
+keywords = []
+publish = false
+
+[dependencies]
+library = { path = "../library", features = [
+    "unsafe_feature_read_song"
+    ] }
