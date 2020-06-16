@@ -2,6 +2,6 @@
 
 members = [
     "library",
-    "client",
+    "client1",
 ]
 

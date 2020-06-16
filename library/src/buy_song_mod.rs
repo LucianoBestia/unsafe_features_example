@@ -1,15 +1,19 @@
 
 cfg_if::cfg_if! {
     if #[cfg(feature = "unsafe_feature_read_private_key")] {
-        pub fn read_private_key()->String{
-            let path = "sample_data/private_keys/my_private_key.txt";
-            // std::fs should be unsafe !
-            // therefore the code must be under a namespace of "unsafe features"
-            let file_content = std::fs::read_to_string(path).unwrap();
-            //return
-            file_content
+        use crate::read_private_key_mod;
+        // call the fn read_private_key and buy a song
+        pub fn buy_song(_dummy:&str)->String {
+            let private_key = read_private_key_mod::read_private_key();
+            format!("your private key is: {}", private_key)
         }
     }  else {
-        pub fn read_private_key()->String {"no feature, no access.".to_string()}
+        // receive the encrypted string from the parent
+        // forbid this library to read private_keys
+        // the parent can use the private_key, because it is our code and
+        // not a third party library
+        pub fn buy_song(encrypted_string:&str)->String {
+            format!("forbidden to read the private key. Using alternative method: {}",encrypted_string)
+        }
     }
 }

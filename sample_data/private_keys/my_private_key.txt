@@ -1,2 +1,1 @@
-content of file
-my_private_keys.txt
+This is my private key.

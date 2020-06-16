@@ -21,11 +21,12 @@ We must opt-in and allow it consciously.
 `$ cargo run`  
 
 ```bash
-private_key: 
-no feature, no access.
-
 song lyrics: 
 Do you have the time to listen to me whine?
+...
+
+buy song: 
+forbidden to read the private key. Using alternative method: ask me later
 ```
 
 We allowed the dependency library to read the song, adding the feature in Cargo.toml like this:
@@ -38,6 +39,26 @@ library = { path = "../library", features = [
 ```
 
 We did not mention anywhere the existence of the feature "unsafe_feature_read_private_key", therefore it is forbidden-by-default.  
+
+Now open client1/Cargo.toml and add the feature
+```toml
+[dependencies]
+library = { path = "../library", features = [
+    "unsafe_feature_read_song",
+    "unsafe_feature_read_private_key"
+    ] }
+```
+
+```bash
+song lyrics: 
+Do you have the time to listen to me whine?
+...
+
+buy song: 
+your private key is: This is my private key.
+```
+
+Now the third party library is allowed to read the private key file.
 
 ## Development
 
@@ -55,3 +76,4 @@ We want it to read the lyrics.
 We didn't even know it can buy songs and read our private key.  
 A silly human mistake, because there are much too many dependencies and transient dependencies to check them all.  
 But because "unsafe features" are opt-in, the code with the dangerous function cannot access the file system.  
+Only if we explicitly and consciously decide to allow it, we add an "unsafe feature" in Cargo.toml.
