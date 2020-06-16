@@ -88,7 +88,7 @@ is forbidden-by-default. We cannot leave this to the developer.
 
 If we have 2 binary and one library in the same workspace, than the library is compiled with the maximum number of features. This means that the client that does not want a feature, it gets it quietly, because the other binary wants it. That is not ok for "unsafe features".  
 
-For backward compatibility with old libraries, in cargo.tom we should opt-in to :
+For backward compatibility with old libraries, in Cargo.toml we should opt-in to :
 
 ```toml
 [dependencies]
