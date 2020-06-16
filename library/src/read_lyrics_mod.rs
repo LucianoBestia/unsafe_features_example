@@ -3,6 +3,8 @@ cfg_if::cfg_if! {
         pub fn read_song()->String{
             let path = "sample_data/songs/basket_case_green_day.txt";
             let file_content;
+            // one idea how to force the existence of "unsafe feature":
+            // unsafe("unsafe_feature_read_song"){...}
             unsafe{
                 // std::fs should be "unsafe"
                 // therefore the code must be under a namespace of "unsafe features"

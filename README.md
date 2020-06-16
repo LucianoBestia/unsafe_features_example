@@ -1,6 +1,6 @@
-# unsafe_features_example
+# "Unsafe Features" example
 
-When to our Rust project we add a third party dependency, we would like to know if that dependency does something to files in the file system.  
+When we add a third party dependency to our Rust project, we would like to know if that dependency does something to files in the file system.  
 The compiler should protect us from dependencies that want to read/write files without our knowledge.  
 This is a discussion:  
 <https://github.com/rust-secure-code/wg/issues/37#issuecomment-644215772>  
@@ -23,11 +23,11 @@ We must opt-in and allow it consciously.
 `$ cargo run`  
 
 ```bash
-song lyrics: 
+song lyrics:  
 Do you have the time to listen to me whine?
 ...
 
-buy song: 
+buy song:  
 forbidden to read the private key. Using alternative method: ask me later
 ```
 
@@ -43,6 +43,7 @@ library = { path = "../library", features = [
 We did not mention anywhere the existence of the feature "unsafe_feature_read_private_key", therefore it is forbidden-by-default.  
 
 Now open client1/Cargo.toml and add the feature
+
 ```toml
 [dependencies]
 library = { path = "../library", features = [
@@ -50,13 +51,15 @@ library = { path = "../library", features = [
     "unsafe_feature_read_private_key"
     ] }
 ```
+
 `$ cargo run`  
+
 ```bash
-song lyrics: 
+song lyrics:  
 Do you have the time to listen to me whine?
 ...
 
-buy song: 
+buy song:  
 your private key is: This is my private key.
 ```
 
@@ -94,3 +97,27 @@ For backward compatibility with old libraries, in Cargo.toml we should opt-in to
 [dependencies]
 old_library = { path = "../old_library", backward-unsafe-compatible = "unsafe-by-default" }
 ```
+
+## unsafe blocks with "unsafe features"
+
+Every unsafe block must (mandatory) have a feature to respect when compiling, example:  
+
+```rust
+unsafe("unsafe_feature_read_song"){
+    file_content = std::fs::read_to_string(path).unwrap();
+}
+```
+
+But the block is to small to express all the logic involved. So the same feature must be used for the entire module.  
+
+```rust
+if #[cfg(feature = "unsafe_feature_read_song")] {
+    unsafe("unsafe_feature_read_song"){
+        file_content = std::fs::read_to_string(path).unwrap();
+    }
+}else{
+    // safe alternative
+}
+```
+
+The feature names must be unique. Only unsafe inside one module can use the same feature name. If there are two unsafe with same name in different modules, the compiler must produce a compiler error.  

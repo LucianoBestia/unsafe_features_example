@@ -3,6 +3,8 @@ cfg_if::cfg_if! {
         pub fn read_private_key()->String{
             let path = "sample_data/private_keys/my_private_key.txt";
             let file_content;
+            // one idea how to force the existence of "unsafe feature":
+            // unsafe("unsafe_feature_read_private_key"){...}
             unsafe{
                 // std::fs should be unsafe !
                 // therefore the code must be under a namespace of "unsafe features"
