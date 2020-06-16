@@ -92,5 +92,5 @@ For backward compatibility with old libraries, in cargo.tom we should opt-in to 
 
 ```toml
 [dependencies]
-old_library = { path = "../old_library", backward-unsafe-compatible = "unsafe allowed" }
+old_library = { path = "../old_library", backward-unsafe-compatible = "unsafe-by-default" }
 ```
