@@ -4,8 +4,8 @@ cfg_if::cfg_if! {
             let file_content;
             /// every unsafe should have a doc-comment, to describe what it does
             /// this unsafe reads from "sample_data/songs/basket_case_green_day.txt"
-            /// one idea how to force the existence of "unsafe feature":
-            ///  unsafe("unsafe_feature_read_song"){...}
+            /// one idea how to force the existence of "unsafe feature"
+            ///    unsafe( "unsafe_feature_read_song"){...}
             unsafe{
                 let path = "sample_data/songs/basket_case_green_day.txt";
                 // std::fs should be "unsafe"

@@ -13,8 +13,12 @@ publish = false
 
 [features]
 unsafe_feature_read_private_key = []
+# optional dependency for fs: unsafe_feature_read_private_key = [std_fs]
 unsafe_feature_read_song = []
+# optional dependency for fs: unsafe_feature_read_song = [std_fs]
 
 [dependencies]
 cfg-if="0.1.10"
-
+# std_fs should be opt-in. It is clear that if this dependecy is used than the crate want file access.
+# std_fs = { optional = true }
+# there could be also other crates that allow file access. They should have an unsafe_feature with optional dependency clearly stated.

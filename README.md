@@ -1,5 +1,9 @@
 # "Unsafe Features" example
 
+[comment]: # (lmake_lines_of_code start)
+
+[comment]: # (lmake_lines_of_code end)
+
 When we add a third party dependency to our Rust project, we would like to know if that dependency does something to files in the file system.  
 The compiler should protect us from dependencies that want to read/write files without our knowledge.  
 This is a discussion:  
@@ -42,7 +46,7 @@ library = { path = "../library", features = [
 
 We did not mention anywhere the existence of the feature "unsafe_feature_read_private_key", therefore it is forbidden-by-default.  
 
-Now open client1/Cargo.toml and add the feature
+Now open client1/Cargo.toml and add the feature "unsafe_feature_read_private_key"  
 
 ```toml
 [dependencies]
